@@ -1,0 +1,35 @@
+name: Validate Required Files
+
+on: [push]
+
+jobs:
+  validate-files:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Verify the presence of required files
+    - name: Check for required files
+      run: |
+        # List of required files
+        REQUIRED_FILES=(
+          "config.toml"
+          "trick.cast"
+          "languages.toml"
+          "code.cast"
+          "grammar.js"
+          "highlights.scm"
+          "highlight.cast"
+        )
+
+        # Loop through the files and check if they exist
+        for FILE in "${REQUIRED_FILES[@]}"; do
+          if [[ ! -f "$FILE" ]]; then
+            echo "Error: $FILE is missing!"
+            exit 1
+          fi
+        done
+        echo "All required files are present."
