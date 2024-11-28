@@ -75,30 +75,6 @@ else
 	all_files_present=false
 fi
 
-# Check for the presence of grammar.js
-if [ -f "grammar.js" ]; then
-	success "Found grammar.js"
-else
-	fail "grammar.js is NOT found"
-	all_files_present=false
-fi
-
-# Check for the presence of highlight.cast
-if [ -f "highlights.scm" ]; then
-	success "Found highlights.scm"
-else
-	fail "highlights.scm is NOT found"
-	all_files_present=false
-fi
-
-# Check for the presence of highlight.cast
-if [ -f "highlight.cast" ]; then
-	success "Found highlight.cast"
-else
-	fail "highlight.cast is NOT found"
-	all_files_present=false
-fi
-
 # Final summary
 echo ""
 if $all_files_present; then

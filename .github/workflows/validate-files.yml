@@ -20,9 +20,6 @@ jobs:
           "trick.cast"
           "languages.toml"
           "code.cast"
-          "grammar.js"
-          "highlights.scm"
-          "highlight.cast"
         )
 
         # Loop through the files and check if they exist
