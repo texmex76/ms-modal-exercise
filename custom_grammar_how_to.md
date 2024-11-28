@@ -2,9 +2,9 @@
 
 **Important**: `lolcode` must not be uppercase!
 
-- Make sure the command `tree-sitter` is available.
+- Make sure the command `tree-sitter` is available. You can get it via `cargo install tree-sitter-cli`
 - Create a folder called `tree-sitter-lolcode` and `cd` into it.
-- `tree-sitter-generate`
+- `tree-sitter init`
 - Edit `grammar.js`:
 
 ```javascript
@@ -25,14 +25,81 @@ module.exports = grammar({
 });
 ```
 
-- Edit `package.json` and add the "file-types" and "highlights" to the entry "tree-sitter":
+- Edit `package.json` and add following:
 
 ```json
-"scope": "source.lolcode",
-"file-types": [
-  "lol"
-],
-"highlights": "queries/highlights.scm",
+"tree-sitter": [
+  {
+    "scope": "source.lolcode",
+    "file-types": [
+      "lol"
+    ],
+    "highlights": "queries/highlights.scm",
+    "injection-regex": "^lolcode$"
+  }
+]
+```
+
+For example, this is a valid `package.json`:
+
+```json
+{
+  "name": "tree-sitter-lolcode",
+  "version": "0.0.1",
+  "description": "Lolcode grammar for tree-sitter",
+  "repository": "github:tree-sitter/tree-sitter-lolcode",
+  "license": "MIT",
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "lolcode"
+  ],
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
+  ],
+  "dependencies": {
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "devDependencies": {
+    "prebuildify": "^6.0.0",
+    "tree-sitter-cli": "^0.22.6"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip",
+    "build": "tree-sitter generate --no-bindings",
+    "build-wasm": "tree-sitter build --wasm",
+    "test": "tree-sitter test",
+    "parse": "tree-sitter parse"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.lolcode",
+      "file-types": [
+        "lol"
+      ],
+      "highlights": "queries/highlights.scm",
+      "injection-regex": "^lolcode$"
+    }
+  ]
+}
 ```
 
 - Make a folder called `queries` and put a file called `highlights.scm` in it:
